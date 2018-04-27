@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/echarts@4.0.4/dist/echarts.min.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 100%;min-height:600px;"></div>
+<script type="text/javascript">
+  // 基于准备好的dom，初始化echarts实例
+  let myChart = echarts.init(document.getElementById('main'));
+
+  let data = {
+    'name': 'Flex',
+    'value': '弹性盒',
+    'children': [
+      {
+        'name': 'Flex Container',
+        'value': '弹性盒容器 父元素 设置display: flex',
+        'children': [
+          {
+            'name': 'flex-direction',
+            'value': '排列方向',
+            'children': [
+              {'name': 'row（默认值）', 'value': '水平方向，从左至右'},
+              {'name': 'row-reverse', 'value': '水平方向，从右至左'},
+              {'name': 'column', 'value': '垂直方向，从上至下'},
+              {'name': 'column-reverse', 'value': '垂直方向，从下至上'},
+            ]
+          },
+          {
+            'name': 'flex-wrap',
+            'value': '换行',
+            'children': [
+              {'name': 'nowrap（默认值）', 'value': '不换行'},
+              {'name': 'wrap', 'value': '多行'},
+              {'name': 'wrap-reverse', 'value': '反向多行，第一行在下方'},
+            ]
+          },
+          {
+            'name': 'flex-flow',
+            'value': '是 flex-direction 和 Flex-wrap的简写，默认值flex-flow: row wrap',
+          },
+          {
+            'name': 'justify-content',
+            'value': '对齐方式',
+            'children': [
+              {'name': 'flex-start（默认值）', 'value': '起始位置对齐'},
+              {'name': 'flex-end', 'value': '结束位置对齐'},
+              {'name': 'center', 'value': '中间位置对齐'},
+              {'name': 'space-between', 'value': '平均分布，子元素之间间隔相同'},
+              {'name': 'space-around', 'value': '平均分布，子元素本身两侧间隔相同'},
+            ]
+          },
+          {
+            'name': 'align-items',
+            'value': '侧轴对齐方式',
+            'children': [
+              {'name': 'stretch（默认值）', 'value': '延伸到填满容器'},
+              {'name': 'flex-start', 'value': '起始位置对齐'},
+              {'name': 'flex-end', 'value': '结束位置对齐'},
+              {'name': 'center', 'value': '中间位置对齐'},
+              {'name': 'baseline', 'value': '基线对齐'},
+            ]
+          },
+          {
+            'name': 'align-content',
+            'value': '多行对齐方式',
+            'children': [
+              {'name': 'stretch（默认值）', 'value': '延伸到填满容器'},
+              {'name': 'flex-start', 'value': '起始位置对齐'},
+              {'name': 'flex-end', 'value': '结束位置对齐'},
+              {'name': 'center', 'value': '中间位置对齐'},
+              {'name': 'space-between', 'value': '平均分布，子元素之间间隔相同'},
+              {'name': 'space-around', 'value': '平均分布，子元素本身两侧间隔相同'},
+            ]
+          }
+        ]
+      },
+      {
+        'name': 'Flex Item',
+        'value': '弹性盒容器内的子元素',
+        'children': [
+          {'name': 'order', 'value': '默认值：0，用整数值来定义排列顺序，数值小的排在前面，可以为负值'},
+          {'name': 'flex-grow', 'value': '默认值：0，用数值来定义扩大比例，不允许负值'},
+          {'name': 'flex-shrink', 'value': '默认值：1，用数值来定义缩小比例，不允许负值'},
+          {'name': 'flex-basis', 'value': '默认值：auto，基准值'},
+          {'name': 'flex', 'value': 'flex-grow, flex-shrink, flex-basis的简写，默认值为0 1 auto。后两个属性可选'},
+          {'name': 'align-self',
+            'value': '允许单个项目有与其他项目不一样的对齐方式',
+            'children': [
+              {'name': 'auto（默认值）', 'value': '继承父元素的align-items属性，如果没有父元素，则等同于stretch'},
+              {'name': 'stretch', 'value': '延伸到填满容器'},
+              {'name': 'flex-start', 'value': '起始位置对齐'},
+              {'name': 'flex-end', 'value': '结束位置对齐'},
+              {'name': 'center', 'value': '中间位置对齐'},
+              {'name': 'baseline', 'value': '基线对齐'},
+            ]
+          },
+        ]
+      },
+    ]
+  };
+
+  let option = {
+    title: {
+      text: 'Flex布局查阅图',
+      subtext: 'author：https://github.com/lixinGiting/Flexbox-guide-map'
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: '{c}'
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    series: [
+      {
+        type: 'tree',
+
+        data: [data],
+
+        top: '1%',
+        left: '7%',
+        bottom: '1%',
+        right: '20%',
+
+        symbolSize: 10,
+
+        label: {
+          normal: {
+            position: 'left',
+            verticalAlign: 'middle',
+            align: 'right',
+            fontSize: 14
+          }
+        },
+
+        leaves: {
+          label: {
+            normal: {
+              position: 'right',
+              verticalAlign: 'middle',
+              align: 'left'
+            }
+          }
+        },
+
+        expandAndCollapse: true,
+        animationDuration: 550,
+        animationDurationUpdate: 750
+      }
+    ]
+  };
+
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option);
+</script>
+</body>
+</html>
